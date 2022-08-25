@@ -1,0 +1,19 @@
+h3 {
+    font-size: 14px;
+}
+.container {
+    display: flex;
+    flex-wrap: wrap;
+}
+.upload1 {
+    width: 250px;
+    height: 250px;
+    border: 1px solid black;
+    margin: 5px;
+}
+.upload2 {
+    width: 512px;
+    height: 250px;
+    border: 1px solid black;
+    margin: 5px;
+}
