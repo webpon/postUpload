@@ -284,7 +284,6 @@
         }
         //上传进度实现方法，上传过程中会频繁调用该方法
         function progressFunction(evt) {
-            console.log('______________');
             var progressBar = document.getElementById("progressBar");
             var percentageDiv = document.getElementById("percentage");
             // event.total是需要传输的总字节，event.loaded是已经传输的字节。如果event.lengthComputable不为真，则event.total等于0

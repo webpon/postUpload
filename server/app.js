@@ -2,9 +2,11 @@
 
 const http = require('http');
 const fs = require('fs');
+const path = require('path')
 const busboy = require('busboy');
 
 http.createServer((req, res) => {
+    // 处理跨域
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader("Access-Control-Allow-Headers", 'X-Requested-With, Content-Type');
     res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
@@ -37,7 +39,8 @@ http.createServer((req, res) => {
                 if (filename) {
                     arr = filename.toString().split('.');//对传递的文件名进行拆分
                     const pathData = parseInt(Date.parse(new Date()).toString().substr(0, 10));//文件名＋十位时间戳.文件类型
-                    file.pipe(fs.createWriteStream('upload/' + pathData + '.' + arr[1]));//利用fs模块创建可以写入的流,并指定保存路径和名称
+                    const uploadDir = path.resolve(__dirname, './upload', pathData + '.' + arr[1]);
+                    file.pipe(fs.createWriteStream(uploadDir));//利用fs模块创建可以写入的流,并指定保存路径和名称
                 }
             });
             bb.on('field', (name, val, info) => {
