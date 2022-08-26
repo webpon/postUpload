@@ -16,8 +16,8 @@
             <h3>post信息[text/plain]</h3>
             <h3>form + input方式(纯html)</h3>
             <form action="http://localhost:8080/upload" method="POST" enctype="text/plain">
-                <input type="text" name="name"><br />
-                <input type="text" name="age"><br />
+                <label>姓名：</label><input type="text" name="name"><br />
+                <label>年龄：</label><input type="text" name="age"><br />
                 <input type="submit" value="提交">
             </form>
         </div>
@@ -26,16 +26,10 @@
             <h3>post信息[x-www-form-urlencoded]</h3>
             <h3>form + input方式(纯html)</h3>
             <form action="http://localhost:8080/upload" method="POST" enctype="application/x-www-form-urlencoded">
-                <input type="text" name="name"><br />
-                <input type="text" name="age"><br />
+                <label>姓名：</label><input type="text" name="name"><br />
+                <label>年龄：</label><input type="text" name="age"><br />
                 <input type="submit" value="提交">
             </form>
-        </div>
-        <!-- post信息[application/json -->
-        <div class="upload1">
-            <h3>post信息[application/json]</h3>
-            <h3>ajax方式</h3>
-            <button onclick="uploadJSON()">提交</button>
         </div>
         <!-- 单一文件上传 [FORM-DATA] -->
         <div class="upload1">
@@ -150,11 +144,6 @@
             }
             req.send(data)
             return this;
-        }
-        function uploadJSON() {
-            post('http://localhost:8080/upload', JSON.stringify({
-                name: 'aaa'
-            }), () => { }, 'application/json;charset=UTF-8')
         }
 
         /* ajax单文件上传 [FORM-DATA] */
