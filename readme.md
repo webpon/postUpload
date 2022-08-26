@@ -12,4 +12,4 @@
 
 > 打开client下的index.html
 
-![image-20220826012223851](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-8f2ad662-66cb-4a7c-8fa5-e7e9e2c18047/9b367866-1059-4d3b-94b8-eeb404403bff.png)
+![image-20220826012223851](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-8f2ad662-66cb-4a7c-8fa5-e7e9e2c18047/8dd73073-89a0-4a09-bbfb-3f5b25378250.png)
