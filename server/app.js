@@ -10,6 +10,9 @@ http.createServer((req, res) => {
     res.setHeader('Access-Control-Allow-Origin', '*');
     res.setHeader("Access-Control-Allow-Headers", 'X-Requested-With, Content-Type');
     res.setHeader("Access-Control-Allow-Methods", "PUT,POST,GET,DELETE,OPTIONS");
+    const contentType = req.headers['content-type']
+    console.log('------------请求类型------------');
+    console.log(req.method + '|' + contentType);
     if (req.method === "OPTIONS") {
         res.status = 200
         res.end('')
@@ -20,7 +23,6 @@ http.createServer((req, res) => {
     else if (req.method === 'POST') {
         console.log('POST request');
         // post请求类型
-        const contentType = req.headers['content-type']
         const formDataReg = /multipart\/form-data/g
         const isFormData = formDataReg.test(contentType)
         if (isFormData) {
@@ -39,7 +41,9 @@ http.createServer((req, res) => {
                 if (filename) {
                     arr = filename.toString().split('.');//对传递的文件名进行拆分
                     const pathData = parseInt(Date.parse(new Date()).toString().substr(0, 10));//文件名＋十位时间戳.文件类型
-                    const uploadDir = path.resolve(__dirname, './upload', pathData + '.' + arr[1]);
+                    const uploadDir = path.resolve(__dirname, './upload', pathData + '.' + arr[arr.length - 1]);
+                    console.log('------------文件保存位置------------');
+                    console.log(uploadDir);
                     file.pipe(fs.createWriteStream(uploadDir));//利用fs模块创建可以写入的流,并指定保存路径和名称
                 }
             });
@@ -64,7 +68,8 @@ http.createServer((req, res) => {
             });
             // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
             req.on('end', function () {
-                // console.log(post);
+                console.log('------------接收到以下信息------------');
+                console.log(post);
                 res.end(post);
             });
         }
