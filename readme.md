@@ -13,3 +13,5 @@
 > 打开client下的index.html
 
 ![image-20220826012223851](https://vkceyugu.cdn.bspapp.com/VKCEYUGU-8f2ad662-66cb-4a7c-8fa5-e7e9e2c18047/aff5f344-d53a-4664-bda5-c3195171ad23.png)
+
+`注意：如果需要局域网或者公网访问，需要把网页中的localhost替换成设备ip`
