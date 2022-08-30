@@ -15,7 +15,7 @@
         <div class="upload1">
             <h3>post信息[text/plain]</h3>
             <h3>form + input方式(纯html)</h3>
-            <form action="http://localhost:8080/upload" method="POST" enctype="text/plain">
+            <form action="http://192.168.31.6:8080/upload" method="POST" enctype="text/plain">
                 <label>姓名：</label><input type="text" name="name"><br />
                 <label>年龄：</label><input type="text" name="age"><br />
                 <input type="submit" value="提交">
@@ -25,7 +25,7 @@
         <div class="upload1">
             <h3>post信息[x-www-form-urlencoded]</h3>
             <h3>form + input方式(纯html)</h3>
-            <form action="http://localhost:8080/upload" method="POST" enctype="application/x-www-form-urlencoded">
+            <form action="http://192.168.31.6:8080/upload" method="POST" enctype="application/x-www-form-urlencoded">
                 <label>姓名：</label><input type="text" name="name"><br />
                 <label>年龄：</label><input type="text" name="age"><br />
                 <input type="submit" value="提交">
@@ -35,7 +35,7 @@
         <div class="upload1">
             <h3>单一文件上传 [FORM-DATA]</h3>
             <h3>form + input方式(纯html)</h3>
-            <form action="http://localhost:8080/upload" method="POST" enctype="multipart/form-data">
+            <form action="http://192.168.31.6:8080/upload" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file"><br />
                 <input type="submit" value="提交">
             </form>
@@ -44,7 +44,7 @@
         <div class="upload1">
             <h3>多文件上传 [FORM-DATA]</h3>
             <h3>form + input方式(纯html)</h3>
-            <form action="http://localhost:8080/upload" method="POST" enctype="multipart/form-data">
+            <form action="http://192.168.31.6:8080/upload" method="POST" enctype="multipart/form-data">
                 <input type="file" name="file" multiple><br />
                 <input type="submit" value="提交">
             </form>
@@ -53,7 +53,7 @@
         <div class="upload1">
             <h3>多文件上传 [FORM-DATA]</h3>
             <h3>form + input方式(纯html)</h3>
-            <form action="http://localhost:8080/upload" method="POST" enctype="multipart/form-data">
+            <form action="http://192.168.31.6:8080/upload" method="POST" enctype="multipart/form-data">
                 <label>姓名：</label><input type="text" name="name"><br />
                 <label>年龄：</label><input type="text" name="age"><br />
                 <input type="file" name="file" multiple><br />
@@ -128,20 +128,7 @@
             <span id="percentage"></span><span id="time"></span>
         </div>
 
-        <!-- 拖拽+点击上传 -->
-        <div class="upload1 upload6">
-            <h3>拖拽上传 {FormData]</h3>
-            <h3>ajax</h3>
-            <input multiple style="visibility: hidden; position: absolute;" class="input6" type="file" />
-            <button onclick="clickUpload()">点击上传</button>
-        </div>
-        <!-- 文件分片上传 -->
-        <div class="upload1">
-            <h3>文件分片上传 [FORM-DATA]</h3>
-            <h3>input方式(ajax)</h3>
-            <input id="miniFormDataAjax" type="file" />
-            <button onclick="uploadminiFormData()">上传</button>
-        </div>
+
     </div>
     <script>
         function post(url, data, callback, type) {
@@ -150,16 +137,13 @@
             if (type) {
                 req.setRequestHeader("content-type", type)
             }
-
+            req.onload = function () {
+                if (callback) {
+                    callback(req.response)
+                }
+            }
             req.send(data)
-            return new Promise((res, reject) => {
-                req.onload = function () {
-                    res(req.response)
-                }
-                req.onerror = function () {
-                    reject()
-                }
-            })
+            return this;
         }
 
         /* ajax单文件上传 [FORM-DATA] */
@@ -170,18 +154,20 @@
             if (file) {
                 var form = new FormData(); // FormData 对象
                 form.append("file", file); // 文件对象
-                post('http://localhost:8080/upload', form)
+                post('http://192.168.31.6:8080/upload', form)
             }
         }
         /* ajax多文件上传 [FORM-DATA] */
         function mutilFormDataAjax() {
             const files = document.querySelector('#mutilFormDataAjax').files
+            console.log(document.getElementById('mutilFormDataAjax'));
+            console.log(files);
             if (files) {
                 var form = new FormData(); // FormData 对象
                 for (let i = 0; i < files.length; i++) {
                     form.append("file", files[i]);
                 }
-                post('http://localhost:8080/upload', form)
+                post('http://192.168.31.6:8080/upload', form)
             }
         }
         /* ajax文件和表单上传 [FORM-DATA] */
@@ -199,7 +185,7 @@
             }
             form.append("name", ajaxFormName);
             form.append("age", ajaxFormAge);
-            post('http://localhost:8080/upload', form)
+            post('http://192.168.31.6:8080/upload', form)
         }
         /* ajax表单上传 [application/json] */
         function uploadFormJSON() {
@@ -209,7 +195,7 @@
                 name: ajaxFormJSONName,
                 age: ajaxFormJSONAge
             }
-            post('http://localhost:8080/upload', JSON.stringify(formObj), () => { }, 'application/json;charset=UTF-8')
+            post('http://192.168.31.6:8080/upload', JSON.stringify(formObj), () => { }, 'application/json;charset=UTF-8')
         }
         /* ajax表单上传 [x-www-form-urlencoded] */
         function uploadFormUrl() {
@@ -219,7 +205,7 @@
                 name: ajaxFormUrlName,
                 age: ajaxFormUrlAge
             }
-            post('http://localhost:8080/upload', JSON.stringify(formObj), () => { }, 'application/x-www-form-urlencoded')
+            post('http://192.168.31.6:8080/upload', JSON.stringify(formObj), () => { }, 'application/x-www-form-urlencoded')
         }
         /* 图片上传预览 */
         function uploadPicture() {
@@ -229,7 +215,7 @@
                 for (let i = 0; i < files.length; i++) {
                     form.append("file", files[i]);
                 }
-                post('http://localhost:8080/upload', form)
+                post('http://192.168.31.6:8080/upload', form)
             }
         }
         function preImg(e) {
@@ -261,13 +247,14 @@
                 for (let i = 0; i < files.length; i++) {
                     form.append("file", files[i]);
                 }
-                post('http://localhost:8080/upload', form)
+                post('http://192.168.31.6:8080/upload', form)
             }
         }
         // 文件上传进度
         function uploadProgress() {
             var fileObj = document.getElementById("progress").files[0]; // js 获取文件对象
-            var url = "http://localhost:8080/upload"; // 接收上传文件的后台地址
+            var url = "http://192.168.31.6:8080/upload"; // 接收上传文件的后台地址
+
             var form = new FormData(); // FormData 对象
             form.append("file", fileObj); // 文件对象
 
@@ -318,115 +305,7 @@
             time.innerHTML = '，速度：' + speed + units + '，剩余时间：' + resttime + 's';
             if (bspeed == 0) time.innerHTML = '上传已取消';
         }
-        /* 拖拽上传 */
-        // 拖拽进入
-        const dragBox = document.querySelector('.upload6')
-        const input6 = document.querySelector('.input6')
-        console.log(dragBox);
-        function clickUpload() {
-            console.log('_____________');
-            input6.click()
-        }
-        input6.addEventListener('change', (e) => {
-            e.preventDefault()
-            const files = e.target.files
-            // alert(files)
-            console.log(files);
-            if (files.length > 0) {
-                if (files) {
-                    var form = new FormData(); // FormData 对象
-                    for (let i = 0; i < files.length; i++) {
-                        form.append("file", files[i]);
-                        form.append("name", files[i].name);
-                    }
-                    post('http://localhost:8080/upload', form)
-                }
-            }
-        })
-        dragBox.addEventListener('dragenter', function (e) {
-            console.log('拖拽进入')
-            e.preventDefault();
-            this.style.border = '1px solid red';
-        });
 
-        // 拖拽放下
-        dragBox.addEventListener('drop', function (e) {
-            e.preventDefault();
-            this.style.border = '';
-            const {
-                dataTransfer: { files },
-            } = e;
-            if (files) {
-                var form = new FormData(); // FormData 对象
-                for (let i = 0; i < files.length; i++) {
-                    form.append("file", files[i]);
-                }
-                post('http://localhost:8080/upload', form)
-            }
-        });
-
-        dragBox.addEventListener('dragover', function (e) {
-            e.preventDefault();
-        });
-        /* 文件切片上传 */
-        function uploadminiFormData() {
-            console.log('______________');
-            const file = document.querySelector('#miniFormDataAjax').files[0]
-            console.log(file);
-            // 创建切片   
-            // let size = 1024 * 1024 * 10; //10MB 切片大小
-            let size = 1024 * 50; //50KB 切片大小
-            let fileChunks = [];
-            let index = 0 //切片序号
-            for (let cur = 0; cur < file.size; cur += size) {
-                fileChunks.push({
-                    hash: index++,
-                    chunk: file.slice(cur, cur + size)
-                })
-            }
-            // 控制并发和断点续传
-            const uploadFileChunks = async function (list) {
-                console.log(')))))))))))))))))');
-                if (list.length === 0) {
-                    //所有任务完成,合并切片
-                    await post('http://localhost:8080/uploadMiniOver', file.name)
-                    console.log('上传完成')
-                    return
-                }
-                let pool = []//并发池
-                let max = 3 //最大并发量
-                let finish = 0//完成的数量
-                let failList = []//失败的列表
-                for (let i = 0; i < list.length; i++) {
-                    let item = list[i]
-                    let formData = new FormData()
-                    formData.append('filename', file.name)
-                    formData.append('hash', item.hash)
-                    formData.append('chunk', item.chunk)
-                    // 上传切片
-                    let task = post('http://localhost:8080/uploadMini', formData)
-                    task.then((data) => {
-                        //请求结束后将该Promise任务从并发池中移除
-                        let index = pool.findIndex(t => t === task)
-                        pool.splice(index)
-                    }).catch(() => {
-                        failList.push(item)
-                    }).finally(() => {
-                        finish++
-                        //所有请求都请求完成
-                        if (finish === list.length) {
-                            uploadFileChunks(failList)
-                        }
-                    })
-                    pool.push(task)
-                    if (pool.length === max) {
-                        //每当并发池跑完一个任务，就再塞入一个任务
-                        await Promise.race(pool)
-                    }
-                }
-            }
-            uploadFileChunks(fileChunks)
-        }
     </script>
 </body>
 
