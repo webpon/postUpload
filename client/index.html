@@ -324,14 +324,11 @@
         const input6 = document.querySelector('.input6')
         console.log(dragBox);
         function clickUpload() {
-            console.log('_____________');
             input6.click()
         }
         input6.addEventListener('change', (e) => {
             e.preventDefault()
             const files = e.target.files
-            // alert(files)
-            console.log(files);
             if (files.length > 0) {
                 if (files) {
                     var form = new FormData(); // FormData 对象
@@ -370,9 +367,7 @@
         });
         /* 文件切片上传 */
         function uploadminiFormData() {
-            console.log('______________');
             const file = document.querySelector('#miniFormDataAjax').files[0]
-            console.log(file);
             // 创建切片   
             // let size = 1024 * 1024 * 10; //10MB 切片大小
             let size = 1024 * 50; //50KB 切片大小
@@ -386,7 +381,6 @@
             }
             // 控制并发和断点续传
             const uploadFileChunks = async function (list) {
-                console.log(')))))))))))))))))');
                 if (list.length === 0) {
                     //所有任务完成,合并切片
                     await post('http://localhost:8080/uploadMiniOver', file.name)
